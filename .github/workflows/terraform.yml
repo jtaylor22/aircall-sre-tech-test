@@ -17,6 +17,7 @@ jobs:
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
+        working-directory: ${{ env.TF_ACTION_WORKING_DIR }}
         shell: bash
 
     steps:
