@@ -18,7 +18,7 @@ let response;
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  * 
  */
-exports.lambdaHandler = async (event, context) => {
+exports.handler = async function(event, context) {
 
     const S3_BUCKET = process.env.S3_BUCKET;
 
@@ -32,6 +32,7 @@ exports.lambdaHandler = async (event, context) => {
             const { body } = await parser.parse(event);
             s3_key = body.s3Key;
             img_buffer = body.files[0].file;
+	    console.log(body);	
         } else {
             throw Error("Method not supported");
         }
@@ -84,6 +85,7 @@ async function resize_image(img_buffer,size) {
             .jpeg()
             .toBuffer()
     } catch (error) {
+	console.log(img_buffer)    
         console.error("Unable to resize image");
         console.error(error);
         throw Error(error);
