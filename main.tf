@@ -1,4 +1,3 @@
- # The configuration for the `remote` backend.
 terraform {
    backend "remote" {
      organization = "aircall-sre-tech-test"
