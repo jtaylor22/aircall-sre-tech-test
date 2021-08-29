@@ -36,7 +36,7 @@ jobs:
         run: sudo npm install claudia -g
         
       - name: npm init
-        run: sudo npm init
+        run: sudo npm init -y
         
       - name: Claudia deploy nodejs application to aws lambda
         run:  claudia create --region eu-west-2 --handler lambda.handler
