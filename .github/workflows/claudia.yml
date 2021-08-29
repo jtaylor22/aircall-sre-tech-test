@@ -27,8 +27,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      - name: Install awscli
-        run: sudo apt install awscli
+      - id: install-aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+      - run: aws --version
+        shell: bash
       
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
