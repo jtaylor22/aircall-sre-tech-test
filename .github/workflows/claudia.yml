@@ -33,5 +33,5 @@ jobs:
       - run: npm install
       
       - name: Install Claudia
-      - run: sudo npm install claudia -g
+        run: sudo npm install claudia -g
     
