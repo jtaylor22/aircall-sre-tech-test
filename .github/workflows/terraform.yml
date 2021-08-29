@@ -5,7 +5,7 @@ on:
     branches:
     - main
     paths:
-      - "./terraform/**"
+      - 'terraform/**'
   pull_request:
 
   # Allows you to run this workflow manually from the Actions tab
