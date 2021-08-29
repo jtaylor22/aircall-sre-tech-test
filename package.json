@@ -2,7 +2,7 @@
   "name": "crop-image",
   "version": "1.0.0",
   "description": "Crop and send image to s3",
-  "main": "app.js",
+  "main": "lambda.js",
   "repository": "https://bitbucket.org/aircall/crop-image",
   "author": "<arnaud.beun@aircall.io>",
   "license": "MIT",
