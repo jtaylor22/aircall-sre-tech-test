@@ -1,3 +1,7 @@
+provider "aws" {
+  region = "eu-west-2"
+}
+
 terraform {
    backend "remote" {
      organization = "aircall-sre-tech-test"
