@@ -8,7 +8,6 @@ This solution to the deployment of the Crop-Image Node.js project uses 3 primary
 2. Terraform Cloud
 3. Github Actions
 
-
 ## Prerequisites
 ### AWS Access Key
 Both Claudia and Terraform authenticate to AWS using an AWS Access Key. To generate one please see: https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/
@@ -71,6 +70,9 @@ Two Workflows for Terraform and Claudia have been created to automate the deplom
 * Targets resouces in /terraform
 * Triggers Terraform Cloud Workspace
 * Runs terraform init/plan/apply
+
+### Deployment Diagram
+![image](https://user-images.githubusercontent.com/20682803/131418064-17d2fc00-0dc8-4eee-812a-295e905eb69f.png)
 
 
 ## Final Thoughts
