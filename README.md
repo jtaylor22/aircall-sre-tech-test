@@ -38,22 +38,44 @@ In order for Claudia and Terraform to securely use the AWS Access Key and API To
      * AWS_SECRET_ACCESS_KEY
      * TF_API_TOKEN
 
-
+## Claudia
 ![image](https://user-images.githubusercontent.com/20682803/131267726-a899f9e2-c40b-4536-a398-2706c8e30df1.png)
 
 Claudia is used to automate the deployment of Node.js projects to AWS Lambda without the need of configuration tools like Terraform. Claudia authenticates to AWS using the 
-AWS Access Key stored in Github Secrets. The deployment of a Node.js project to AWS Lambda can be done in one command:
+AWS Access Key stored in Github Secrets. The deployment of a Node.js project to AWS Lambda can be done in one command:<br/>
 `claudia create --region eu-west-2 --api-module app`
 
 
 ## Terraform Cloud
-S3 Bucket for crop-tool resized images
-API Gateway handling POST requests to /image 
-Terraform Cloud Backend
+![image](https://user-images.githubusercontent.com/20682803/131269215-c0372871-453d-4702-b0b1-d666ef4ce7f4.png)<br/>
+Terraform Cloud is used to build the following AWS resources:
+
+* S3 - bucket for hosting images resized by the crop-image lambda.
+* API Gateway - REST API for handling POST requests to /image
+* Terraform Cloud Backend
+
 
 ## Github Actions
-Two Workflows for Terraform and Claudia
+![image](https://user-images.githubusercontent.com/20682803/131269967-a3b9b380-af72-41ac-bab3-80070e7e6c84.png)<br/>
 
-Feature Requests
-Deployment Pipeline
-Claudia Update
+Two Workflows for Terraform and Claudia have been created to automate the deploment from a Git Push to Terraform Cloud deploying resources to AWS.
+### Claudia Workflow
+* Triggered by commits to /crop-tool or manually
+* Installs npm
+* Installs Claudia
+* Initialises npm
+* Builds AWS Lambda and deploys crop-tool Node.js project
+
+### Terraform Workflow
+* Triggered by commits to /crop-tool or manually
+* Targets resouces in /terraform
+* Triggers Terraform Cloud Workspace
+* Runs terraform init/plan/apply
+
+
+## Final Thoughts
+This solution isn't perfect, and I decided to leave some more desirable features given the 1-6 hour suggested time limit for this project. Given more time, I would have implemented the following features:
+
+1. Deployment Pipeline to destroy Terraform and Claudia resources
+2. Claudia Update functionality so that the Claudia Workflow can be run multiple times.
+3. More suitable method to add Terraform Cloud details to /terraform/main.tf
