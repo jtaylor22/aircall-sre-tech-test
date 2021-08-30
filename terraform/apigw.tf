@@ -10,6 +10,7 @@ output "account_id" {
 
 resource "aws_api_gateway_rest_api" "crop_tool_api" {
   name = var.crop_tool_api
+  binary_media_types = "multipart/form-data"
   description = "API for handling POST requests to crop-tool application"
 }
 
