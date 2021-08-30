@@ -4,6 +4,6 @@ data "aws_iam_role" "lambda_execution_role" {
 
 resource "aws_iam_policy_attachment" "s3_policy_attachment" {
   name       = "s3_policy_attachment"
-  roles      = [aws_iam_role.lambda_execution_role.name]
+  roles      = [data.aws_iam_role.lambda_execution_role.name]
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
