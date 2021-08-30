@@ -79,3 +79,4 @@ This solution isn't perfect, and I decided to leave some more desirable features
 1. Deployment Pipeline to destroy Terraform and Claudia resources
 2. Claudia Update functionality so that the Claudia Workflow can be run multiple times.
 3. More suitable method to add Terraform Cloud details to /terraform/main.tf
+4. Suitable role without AdministratorAccess for Terraform Cloud and Claudia to use.
