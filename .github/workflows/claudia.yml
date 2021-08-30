@@ -38,6 +38,3 @@ jobs:
         
       - name: Claudia deploy nodejs application to aws lambda
         run: claudia create --region eu-west-2 --handler lambda.handler --set-env S3_BUCKET=crop-tool-images
-
-      - name: Add S3 permissions to Claudia lambda execution role
-        run: claudia add-s3-event-source --bucket crop-tool-images
