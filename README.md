@@ -13,7 +13,7 @@ This solution to the deployment of the Crop-Image Node.js project uses 3 primary
 Both Claudia and Terraform authenticate to AWS using an AWS Access Key. To generate one please see: https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/
 
 ### Terraform Cloud Account
-This solution uses Terraform Cloud as the automation tool to deploy Terraform resources to AWS, as as the backend for the remote Terraform State.
+This solution uses Terraform Cloud as the automation tool to deploy Terraform resources to AWS, and as the backend for the remote Terraform State.
 
 You can create a Terraform Cloud account for free here : https://app.terraform.io/session
 
@@ -22,16 +22,16 @@ Once created, login and perform the following:
 2. Create new Workspace.
 3. Select API-Driven workflow
 4. Name your workspace i.e aircall-sre-tech-test
-5. add your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY as Environment Variables in your workspace.
-6. Add your organization and workspace to /terraform/main.tf
+5. Add your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY as Environment Variables in your workspace.
+6. Add your organization and workspace to [/terraform/main.tf](https://github.com/jtaylor22/aircall-sre-tech-test/blob/main/terraform/main.tf)
 
 ### Terraform Cloud API Token
-Gitlab Actions requires an API Token to use Terraform Cloud. Then can be generated in your Terraform Cloud User Settings. 
+Gitlab Actions requires an API Token to use Terraform Cloud. This can be generated in your Terraform Cloud User Settings. 
 
 ### Github Secrets
-In order for Claudia and Terraform to securely use the AWS Access Key and API Token, you will need to add them as Gitlab Secrets:
+In order for Claudia and Terraform to securely use the AWS Access Key and Terraform Cloud API Token, you will need to add them as Gitlab Secrets:
 1. Click on settings on this project.
-2. Select secrets
+2. Select secrets.
 3. Add the following secrets with relevant values:
      * AWS_ACCESS_KEY_ID
      * AWS_SECRET_ACCESS_KEY
@@ -44,13 +44,14 @@ Claudia is used to automate the deployment of Node.js projects to AWS Lambda wit
 AWS Access Key stored in Github Secrets. The deployment of a Node.js project to AWS Lambda can be done in one command:<br/>
 `claudia create --region eu-west-2 --api-module app`
 
+For further reading please see https://claudiajs.com/
 
 ## Terraform Cloud
 ![image](https://user-images.githubusercontent.com/20682803/131269215-c0372871-453d-4702-b0b1-d666ef4ce7f4.png)<br/>
 Terraform Cloud is used to build the following AWS resources:
 
 * S3 - bucket for hosting images resized by the crop-image lambda.
-* API Gateway - REST API for handling POST requests to /image
+* API Gateway - REST API for handling POST requests to /image.
 * Terraform Cloud Backend
 
 
@@ -74,11 +75,23 @@ Two Workflows for Terraform and Claudia have been created to automate the deplom
 ### Deployment Diagram
 ![image](https://user-images.githubusercontent.com/20682803/131418064-17d2fc00-0dc8-4eee-812a-295e905eb69f.png)
 
+### Usage
+Once everything is deployed, you can grab the Invoke URL from API Gateway/crop-tool-api/Stages/Image/Image/POST.
+An example URL would look like:<br/>
+`https://l9xjhw40ic.execute-api.eu-west-2.amazonaws.com/image/image`
+
+1. Ensure you have a suitable img.jpg image in your working directory
+2. Ensure you have the Invoke URL from API Gateway
+3. Run the following:
+`curl --location --request POST '<invoke_url>' \
+--form 'file=@img.jpg' \
+--form 's3Key=img.jpg'`
+4. Check S3 for your resized images.
 
 ## Final Thoughts
 This solution isn't perfect, and I decided to leave some more desirable features given the 1-6 hour suggested time limit for this project. Given more time, I would have implemented the following features:
 
 1. Deployment Pipeline to destroy Terraform and Claudia resources
-2. Claudia Update functionality so that the Claudia Workflow can be run multiple times.
-3. More suitable method to add Terraform Cloud details to /terraform/main.tf
+2. Claudia Update functionality so that the Claudia Workflow can be run multiple times. The current workflow uses Claudia Create.
+3. More suitable method to inject Terraform Cloud details to /terraform/main.tf.
 4. Suitable role without AdministratorAccess for Terraform Cloud and Claudia to use.
